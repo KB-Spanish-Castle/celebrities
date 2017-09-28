@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <title>Your Favorite Celebrities</title>
+</head>
+
+<body>
+  <h1>
+    Your Favorite Celebrities
+  </h1>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+  crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+  crossorigin="anonymous"></script>
+  <script>
+    var allOurStars = [];
+    var refreshList = function () {
+      $("#starList").empty();
+      var today = new Date();
+      var starList = $('#starList');
+      starList.append("<tr><th>Name</th><th>BirthDay</th><th>Starred In</th></tr>");
+      allOurStars.forEach((star) => {
+        var birthday = "unknown";
+        if (star.birthday) {
+          var bDate = new Date(star.birthday);
+          birthday = bDate.toLocaleDateString();
+        }
+        starList.append("<tr>");
+        starList.append("<td>" + star.name + "</td>");
+        starList.append("<td>" + birthday + "</td>");
+        starList.append("<td>" + star.starredIn + "</td>");
+        starList.append("</tr>");
+      });
+    }
+    $.get("/stars", function (data) {
+      console.log(data);
+      allOurStars = data;
+      refreshList();
+    });
+    // $('#formButton').click(function (event) {
+    //   event.preventDefault();
+    //   var bDate = new Date($('#birthday').val());
+    //   bDate.setHours(23);
+    //   var newName = {
+    //     name: $('#name').val(),
+    //     birthday: bDate,
+    //     email: $('#email').val()
+    //   };
+    //   allOurNames.push(newName);
+    //   $.post("/names", newName);
+    //   refreshList();
+    // });
+  </script>
+</body>
+
+</html>
